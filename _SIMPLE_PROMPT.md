@@ -20,4 +20,4 @@ python scripts/batch_convert.py ../KaitoVault docs
 - 変更後はgit push origin main
 
 ## 詳細情報
-完全なガイドは `CONTEXT_FOR_NEW_CHAT.md` を参照 
+完全なガイドは `_CONTEXT_FOR_NEW_CHAT.md` を参照 
