@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ja">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   浅草サンバを見てみよう - Kaito's Personal Website
+  </title>
+  <style>
+   /* ====================
+           リセット & 基本設定
+        ==================== */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            color: #333333;
+            font-size: 16px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* ====================
+           ヘッダー階層
+        ==================== */
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2.5em;
+            margin-bottom: 1em;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 2em;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 5px;
+        }
+
+        h4 {
+            font-size: 1.25em;
+            color: #34495e;
+        }
+
+        h5 {
+            font-size: 1.1em;
+            color: #34495e;
+        }
+
+        h6 {
+            font-size: 1em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ====================
+           テキスト要素
+        ==================== */
+        p {
+            margin-bottom: 1.5em;
+            line-height: 1.7;
+        }
+
+        /* ====================
+           コードブロック
+        ==================== */
+        pre {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        code {
+            background-color: #f8f9fa;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+            border: 1px solid #e9ecef;
+        }
+
+        /* ====================
+           引用
+        ==================== */
+        blockquote {
+            border-left: 5px solid #3498db;
+            margin: 1.5em 0;
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            font-style: italic;
+            color: #555;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ====================
+           リスト
+        ==================== */
+        ul, ol {
+            margin-bottom: 1.5em;
+            padding-left: 2em;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        /* ====================
+           テーブル
+        ==================== */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5em 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 500px;
+            background-color: #ffffff;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+
+        /* ====================
+           画像
+        ==================== */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+
+        /* ====================
+           動画（iframe）
+        ==================== */
+        iframe {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+
+        /* ====================
+           リンク
+        ==================== */
+        a {
+            color: #3498db;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #2980b9;
+            border-bottom-color: #2980b9;
+        }
+
+        /* ====================
+           レスポンシブ: タブレット
+        ==================== */
+        @media (max-width: 1024px) {
+            body {
+                padding: 30px 15px;
+                font-size: 15px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            h3 {
+                font-size: 1.4em;
+            }
+
+            pre {
+                padding: 15px;
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 10px 12px;
+            }
+
+            iframe {
+                width: 100%;
+                height: 250px;
+            }
+        }
+
+        /* ====================
+           レスポンシブ: スマホ
+        ==================== */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-top: 0;
+                margin-bottom: 0.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+                margin-top: 2em;
+                margin-bottom: 0.8em;
+            }
+
+            h3 {
+                font-size: 1.3em;
+                margin-top: 1.5em;
+                margin-bottom: 0.6em;
+            }
+
+            h4, h5, h6 {
+                margin-top: 1.2em;
+                margin-bottom: 0.5em;
+            }
+
+            pre {
+                padding: 12px;
+                font-size: 12px;
+                margin: 1em 0;
+            }
+
+            blockquote {
+                padding: 10px 15px;
+                margin: 1em 0;
+            }
+
+            ul, ol {
+                padding-left: 1.5em;
+            }
+
+            th, td {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            table {
+                min-width: 400px;
+            }
+
+            iframe {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        /* ====================
+           レスポンシブ: 小さいスマホ
+        ==================== */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 8px;
+                font-size: 13px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            pre {
+                padding: 10px;
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+
+            table {
+                min-width: 320px;
+            }
+
+            iframe {
+                width: 100%;
+                height: 180px;
+            }
+        }
+
+        /* ====================
+           印刷スタイル
+        ==================== */
+        @media print {
+            body {
+                max-width: none;
+                padding: 0;
+                font-size: 12pt;
+                line-height: 1.5;
+                color: #000;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                color: #000;
+                page-break-after: avoid;
+            }
+
+            pre, blockquote {
+                page-break-inside: avoid;
+                background-color: #f5f5f5 !important;
+                box-shadow: none;
+            }
+
+            a {
+                color: #000;
+                text-decoration: underline;
+            }
+
+            img {
+                max-width: 100% !important;
+                box-shadow: none;
+            }
+
+            iframe {
+                display: none;
+            }
+        }
+
+        /* ====================
+           ダークモード対応
+        ==================== */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #e0e0e0;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                color: #ffffff;
+            }
+
+            pre {
+                background-color: #2d2d2d;
+                border-color: #404040;
+            }
+
+            code {
+                background-color: #2d2d2d;
+                color: #ff6b6b;
+                border-color: #404040;
+            }
+
+            blockquote {
+                background-color: #2d2d2d;
+                border-left-color: #3498db;
+            }
+
+            table {
+                background-color: #1a1a1a;
+            }
+
+            th {
+                background-color: #2d2d2d;
+                color: #ffffff;
+            }
+
+            tr:nth-child(even) {
+                background-color: #2d2d2d;
+            }
+
+            tr:hover {
+                background-color: #3d3d3d;
+            }
+
+            th, td {
+                border-color: #404040;
+            }
+        }
+  </style>
+ </head>
+ <body>
+  <h1 id="浅草サンバを見てみよう">
+   浅草サンバを見てみよう
+  </h1>
+  <p>
+   まずはS1優勝チームの
+   <a href="https://gressaude.com/dictionary/carnival#c1">
+    ヂスフィーレ / Desfile
+   </a>
+   を見るのがおすすめ！
+   <br>
+   優勝するのも納得の迫力たっぷりなパフォーマンスが楽しめます。
+  </p>
+  <h2 id="年-s1優勝-ウニアン-バグズカーニバル">
+   1. 2013年 S1優勝 ウニアン
+   <a href="http://uniaodosamadores.com/activity.html">
+    『バグズカーニバル』
+   </a>
+  </h2>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/fAWMnAgNCVo?si=5PxbkoS38cCXt_ku" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   それぞれのアーラがなんの虫なのだろうかと、ついつい考えてしまう、華やかで楽しいヂスフィーレ。
+   <br/>
+   <a href="https://gressaude.com/dictionary/carnival#c7">
+    コミッサォン・ヂ・フレンチ / Comissão de frente
+   </a>
+   のてんとう虫、傘を使った表現がシンプルだけど効果的ですね。
+   <br/>
+   もしかしたら、Frevoを意識しているのかも。
+  </p>
+  <h3 id="frevoフレーヴォ">
+   <a href="https://www.pyonpyoco.com/blog/687/">
+    Frevo
+   </a>
+   (フレーヴォ)
+  </h3>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/6XruFqqeq9o?si=-yG96TwrjvRP8axO" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   ブラジル北東部ペルナンブーコ州発祥の音楽＆ダンスで、ユネスコ無形文化遺産にも登録されています。
+   <br/>
+   管楽器が入ったアップテンポなものが有名。小さな傘を持って踊るのが特徴的です。
+  </p>
+  <hr/>
+  <h2 id="年-s1優勝-サウーヂ-ありがとうサンバ-愛するすべての人に感謝を">
+   2. 2015年 S1優勝 サウーヂ
+   <a href="https://gressaude.com/about/history/5#2015">
+    『“ありがとう、サンバ！” ～愛するすべての人に感謝を～』
+   </a>
+  </h2>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/kjxguicRPHA?si=HreHDZm15kaxM6HP" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   最初に出てくる山車（
+   <a href="https://gressaude.com/dictionary/carnival#c8">
+    アブリ・アーラ / Abre alas
+   </a>
+   ）には、ブラジル・リオの老舗
+   <a href="http://www.gres-liberdade.com/wordpress/?p=4007">
+    エスコーラ / Escola
+   </a>
+   、Mangueira にゆかりのある歌手 Nelson Cavaquinho や Cartola,
+   Chico Buarque の巨大人形が座ってます。
+   <br>
+   サウーヂは Yokohamangueira を自称し、Mangueiraに深いリスペクトを捧げています。
+  </p>
+  <h3 id="mangueira-マンゲイラゆかりのアーティストたち">
+   Mangueira (マンゲイラ)ゆかりのアーティストたち
+  </h3>
+  <h4 id="左-nelson-cavaquinhoネウソンカヴァキーニョ">
+   左
+   <a href="https://ameblo.jp/amante-da-mpb/entry-12886596790.html">
+    Nelson Cavaquinho
+   </a>
+   (ネウソン・カヴァキーニョ)
+  </h4>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/RwGZskGPUsM?si=9rzYxt8nexguVicq" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   カヴァキーニョでキャリアを始めたから、ネウソン・カヴァキーニョ。
+   <br/>
+   動画では、ギターで
+   <a href="https://ameblo.jp/amante-da-mpb/entry-12775443713.html">
+    Folhas Secas (枯葉)
+   </a>
+   を弾き語っています。歌詞にマンゲイラへの思いがこもってますね。
+  </p>
+  <ul>
+   <li>
+    <a href="https://youtu.be/JquSlg-tzyI?si=ViZ9v8DZ5Q3a2OWY">
+     Caminhando
+    </a>
+    ：もちろんカバコの楽曲もあります。
+    <a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%AD">
+     Choro (ショーロ)
+    </a>
+    のナンバー。
+   </li>
+  </ul>
+  <h4 id="中央-cartolaカルトーラ">
+   中央
+   <a href="https://ameblo.jp/amante-da-mpb/entry-12824546276.html">
+    Cartola
+   </a>
+   (カルトーラ)
+  </h4>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/L8U1Y9PBfig?si=tgJ42VclBBAqO3Fm" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   建設現場のお仕事中、頭を守るために帽子をかぶっていたから、カルトーラ（シルクハット）。
+   <br/>
+   動画では、40年間口をきいていなかった父親に
+   <a href="https://ameblo.jp/amante-da-mpb/entry-12656197130.html">
+    O Mundo É um Moinho
+   </a>
+   を歌いかけている。
+  </p>
+  <ul>
+   <li>
+    <a href="https://youtu.be/qIGN9fDhrEU?si=2S-dc6VLbm35Xa3L">
+     O Sol Nascerá
+    </a>
+    ：「
+    <a href="https://ameblo.jp/amante-da-mpb/entry-12888252798.html">
+     太陽は昇る
+    </a>
+    」というタイトルの美しい曲です。演奏するなら、フルートも欲しくなりますね。
+   </li>
+   <li>
+    <a href="https://youtu.be/nfl1O2uAcss?si=exj4Now_7qdwz890">
+     Acontece
+    </a>
+    ：Paulinho da Viola との
+    <a href="https://ameblo.jp/amante-da-mpb/entry-12824546276.html">
+     デュエット
+    </a>
+    で。
+   </li>
+  </ul>
+  <h4 id="右-chico-buarqueシコブアルキ">
+   右
+   <a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%82%B3%E3%83%BB%E3%83%96%E3%82%A2%E3%83%AB%E3%82%AD">
+    Chico Buarque
+   </a>
+   (シコ・ブアルキ)
+  </h4>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/yQZ65SkiSKI?si=zSQxcHFe3ZsVe9Fk" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   Chicoの色気がすごい！
+   <br/>
+   <a href="https://ameblo.jp/amante-da-mpb/entry-12774095930.html">
+    Quem Te Viu, Quem Te Vê
+   </a>
+   はサンバチームをめぐる恋の歌。
+  </p>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/n72vD9Wtt8Y?si=y9Qg8skAR9VprJti" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   <a href="https://ameblo.jp/amante-da-mpb/entry-12840051419.html">
+    Noite dos Mascarados
+   </a>
+   は仮面をつけたカーニバルでの恋のお話ですね。
+   <br/>
+   色っぽく絡み合うデュエットに、4人の男声コーラスとオニオオハシ。絵面はとってもシュール。
+  </p>
+  <hr/>
+  <h2 id="年-s1優勝-サウーヂ-サウーヂは愛を歌う-サンバの鼓動を響かせ愛の奇跡を生み出す">
+   3. 2010年 S1優勝 サウーヂ
+   <a href="https://gressaude.com/about/history/5#2010">
+    『“サウーヂは愛を歌う！” ～サンバの鼓動を響かせ、愛の奇跡を生み出す～』
+   </a>
+  </h2>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/hAbdc6K9TvM?si=MwCMoKRrDZH7IzjV" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   サウーヂは
+   <a href="http://www.gres-liberdade.com/wordpress/?p=6332">
+    バイアーナ / Baianas
+   </a>
+   のサイオッチ（スカート）が大きい！動くだけで迫力があります。
+   <br/>
+   そして終盤には、衝撃の”ベッド”アーラが…！！！
+  </p>
+  <h3 id="バイーア出身のアーティスト">
+   バイーア出身のアーティスト
+  </h3>
+  <p>
+   もともと首都が置かれていたバイーアには、海を渡って連れてこられたアフリカ人奴隷が流入し、アフリカ由来の文化・風俗がブラジルの文化にも大きな影響を与えました。
+   <br/>
+   19世紀末のリオ・デ・ジャネイロに住んでいたバイーア出身の黒人女性たちがサンバの誕生に大きな役割を果たしたことに敬意を払い、ブラジルのサンバカーニバルでは、バイアーナのアーラを設けることが必須となっています。
+  </p>
+  <h4 id="dorival-caymmi-ドリヴァウカイーミ">
+   <a href="https://ameblo.jp/amante-da-mpb/entry-12820843317.html">
+    Dorival Caymmi
+   </a>
+   (ドリヴァウ・カイーミ)
+  </h4>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/xBb0WOce3h0?si=fmvmiYgTJ9q6da8c" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   バイーアの海、めっちゃ綺麗です。
+   <br/>
+   よく知ってるサンバと同じ2拍子なんだけど、刻み方にバイーアらしいニュアンスが表れてます。
+  </p>
+  <h4 id="gilberto-gil-caetano-veloso-ジルベルトジルカエターノヴェローゾ">
+   <a href="https://ameblo.jp/amante-da-mpb/entry-12675088675.html">
+    Gilberto Gil & Caetano Veloso
+   </a>
+   (ジルベルト・ジル/カエターノ・ヴェローゾ)
+  </h4>
+  <p>
+   <a href="https://ja.wikipedia.org/wiki/%E3%83%88%E3%83%AD%E3%83%94%E3%82%AB%E3%83%AA%E3%82%A2">
+    トロピカリア
+   </a>
+   と呼ばれる芸術運動を率いた二人。ビートルズが好きな人にもおすすめ。
+  </p>
+  <ul>
+   <li>
+    <p>
+     <a href="https://youtu.be/qsI5K54izj4?si=jacXO7__-lLC9IOC">
+      Palco
+     </a>
+     ：Discordのサーバー名は、ジルの代表作からとりました。
+    </p>
+   </li>
+   <li>
+    <p>
+     London, London：軍事政権に睨まれたカエターノがロンドンでの亡命中に作曲。
+     <br>
+     動画では、二人で仲良く歌ってます。
+     <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/TQiVQJvuVYM?si=4x2oPe_Qr8lOS4ak" title="YouTube video player" width="560">
+     </iframe>
+    </p>
+   </li>
+  </ul>
+  <h4 id="ivete-sangalo-イヴェッチサンガーロ">
+   <a href="https://www.musicapopbrasil-kansokujo.com/ivetesangalo-onda-boa-com-ivete/">
+    Ivete Sangalo
+   </a>
+   (イヴェッチ・サンガーロ)
+  </h4>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/Rc3tsTu5qdQ?si=GnTfUbvDbfN1kl_b" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   <a href="http://psansmusic.cocolog-nifty.com/blog/2015/07/axe-a038.html">
+    Axé
+   </a>
+   (アシェー)のバンドで、ボーカルとして1993年にデビュー。歌って踊って、めちゃくちゃパワフル！
+   <br/>
+   バイーアのカーニバルでは、動画のように有名歌手とバンドを載せた巨大トラックが街を練り歩きます。
+  </p>
+  <ul>
+   <li>
+    <p>
+     <a href="https://youtu.be/rG0ZTcHcS5w?si=onw-8PP_zVA1DhHT">
+      Pais Tropical / Arerê / Taj Mahal
+     </a>
+     ：アラサー世代のラムっこは、Pererê と Arerê をエアロビ感覚で合宿中に踊っていました笑
+    </p>
+   </li>
+   <li>
+    <p>
+     <a href="https://youtu.be/k6zrTtMopvY?si=m0rJiYejTHmfVE1x">
+      Grande Rio 2017
+     </a>
+     ：リオのカーニバルでもエンヘード（テーマ）として選ばれたことがある。
+     <br/>
+     コミッサォン・ヂ・フレンチでは、バイーアの漁民たちの中から早替わりで本人が突如現れるという演出。
+    </p>
+   </li>
+  </ul>
+  <h4 id="armandinho-macedo-アルマンヂーニョ">
+   <a href="https://www.moonromantic.com/post/2025-07-23-【観覧】chama-gente-dia-1armandinho-macêdo-e-convidados">
+    Armandinho Macedo
+   </a>
+   (アルマンヂーニョ・マセード)
+  </h4>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/BXAv0kZOUts?si=02K6o9Bz8qc9Slwt" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   バイーアのカーニバル・スタイルから生まれた、小型のエレキギター
+   <a href="https://pt.wikipedia.org/wiki/Guitarra_baiana">
+    ギターハ・バイアーナ
+   </a>
+   の第一人者。
+   <br/>
+   動画の演奏は、ロックとフレーヴォからの影響を色濃く感じますね。
+  </p>
+  <ul>
+   <li>
+    <p>
+     <a href="https://youtu.be/9G6exz4Q7Bo?si=yIfscN5_NkcH66qC">
+      Noites Cariocas
+     </a>
+     ：ショーロの花形楽器、バンドリンも弾きこなす。
+    </p>
+   </li>
+   <li>
+    <p>
+     <a href="https://youtu.be/RGNJR2hEhHU?si=1MMe4r3n4CfnVF6C">
+      Brasileirinho
+     </a>
+     ：ショーロの有名ナンバーを、Mocidade Independente とのコラボで演奏。
+    </p>
+   </li>
+  </ul>
+  <p>
+   今月開催の
+   <a href="https://www.instagram.com/p/DLldilFpZWc/?utm_source=ig_web_button_share_sheet">
+    ブラジルフェスティバル
+   </a>
+   では、大トリを務めるべく来日するので、ぜひ観よう！
+  </p>
+  <hr/>
+  <h2 id="年-s2準優勝-アハスタォン-リモコン">
+   4. 2018年 S2準優勝 アハスタォン
+   <a href="https://arrastao.com/sound.html">
+    『リモコン』
+   </a>
+  </h2>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/MI0eNF-UkPk?si=nacQsGFyR7BOoaps" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   近年コンペ的には成績が振るわないものの、無理せず楽しく取り組んでいる雰囲気が好印象のアハスタォン。比較的少人数でシンプルな
+   <a href="https://gressaude.com/dictionary/carnival#c4">
+    アーラ / Ala
+   </a>
+   編成ながらも、
+   <a href="https://gressaude.com/dictionary/carnival#c2">
+    エンヘード / Enredo
+   </a>
+   がしっかり伝わる高コスパな表現に成功している。
+   <br>
+   楽曲でも、スロー、巻き戻し、一時停止とリモコンらしいギミックをしっかり表現していてユニーク。それでいて「アハスタォンは止められナイ」とロックなメッセージ性も込めちゃうのがニクいところ。
+  </p>
+  <hr/>
+  <h2 id="年-s1優勝-バルバロス-サンバの国ブラジル-パウリーニョダヴィオラの軌跡">
+   5. 2018年 S1優勝 バルバロス
+   <a href="https://www.gres-barbaros.com/asakusa/2018">
+    『サンバの国ブラジル ～パウリーニョ・ダ・ヴィオラの軌跡～』
+   </a>
+  </h2>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/0DqsYRk3-aY?si=zyWPvNIlEqRg0J2V" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   サンバの貴公子、Paulinho da Viola (パウリーニョ・ダ・ヴィオラ)を讃えるという抽象的なテーマで優勝。
+   <br>
+   3:00あたりから登場する
+   <a href="https://rtrp.jp/articles/84198/">
+    ラパの水道橋
+   </a>
+   くらいの大道具であれば、（多少の工夫は必要になるが）S2リーグでも出せなくはない。
+   <br>
+   Paulinhoがブラジル・リオのエスコーラ Portela 出身であることから、Portelaの
+   <a href="http://www.gres-liberdade.com/wordpress/?p=2712">
+    プレジデンチ / Presidente
+   </a>
+   と
+   <a href="https://gressaude.com/dictionary/carnival#c9">
+    カザウ / Casal
+   </a>
+   が来日し、ヂスフィーレに加わった。
+  </p>
+  <ul>
+   <li>
+    <a href="https://youtu.be/wYHF1pE7d9k?si=gMQDjC672fAOkgsd">
+     Luis Carlos Magalhães
+    </a>
+    ：当時のプレジデンチ
+   </li>
+   <li>
+    <a href="https://www.instagram.com/marlon.lamar?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==">
+     Marlon Lamar
+    </a>
+    ：第1カザウ（メストリ・サーラ）（2018〜現在）
+   </li>
+   <li>
+    <a href="https://www.instagram.com/lucinhanobre10?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==">
+     Lucinha Nobre
+    </a>
+    ：当時の第1カザウ（ポルタ・バンデイラ）（現在はUnidos da Tijucaの第1カザウ）
+   </li>
+  </ul>
+  <h4 id="paulinho-da-viola-パウリーニョダヴィオラ">
+   <a href="https://ja.wikipedia.org/wiki/%E3%83%91%E3%82%A6%E3%83%AA%E3%83%BC%E3%83%8B%E3%83%A7%E3%83%BB%E3%83%80%E3%83%BB%E3%83%B4%E3%82%A3%E3%82%AA%E3%83%A9">
+    Paulinho da Viola
+   </a>
+   (パウリーニョ・ダ・ヴィオラ)
+  </h4>
+  <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/DFGYBkf1eBY?si=-7-sNBKVTzBKtncu" title="YouTube video player" width="560">
+  </iframe>
+  <p>
+   リオのサンバの正統後継者、と言ったような存在。カバコの弾き語りスタイルが得意。
+   <br>
+   <a href="https://ameblo.jp/amante-da-mpb/entry-12857948736.html">
+    Coração Leviano
+   </a>
+   は爽やかな曲調の失恋ソング。
+  </p>
+  <ul>
+   <li>
+    <a href="https://youtu.be/jvFTvSF8JfI?si=CY2myMOgX8kbVhzC">
+     Clara Nunesとのパゴーヂ
+    </a>
+    ：二人ともPortelaにゆかりがある。
+   </li>
+  </ul>
+  <!-- テーブルを自動でラップする JavaScript -->
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+            // テーブルを自動でコンテナにラップ
+            const tables = document.querySelectorAll('table');
+            tables.forEach(table => {
+                if (!table.parentElement.classList.contains('table-container')) {
+                    const container = document.createElement('div');
+                    container.className = 'table-container';
+                    table.parentNode.insertBefore(container, table);
+                    container.appendChild(table);
+                }
+            });
+        });
+  </script>
+ </body>
+</html>
