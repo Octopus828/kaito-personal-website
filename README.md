@@ -1,206 +1,114 @@
 # Kaito's Personal Website
 
-GitHub Pagesを使用したブラジル音楽と研究をテーマにした個人ウェブサイトです。
+Kaito の個人ウェブサイト用プロジェクト。研究活動とブラジル音楽の情報を発信します。
 
-## 🎯 コンセプト
-
-- **Research**: 認知科学、心理学、リスク認知に関する研究
-- **Brazilian Music**: サンバ、ボサノヴァ、ショーロなどブラジル音楽の探求
-- **Life**: 日常の気づきや学びの共有
-
-## 📁 プロジェクト構成
+## 📁 プロジェクト構造
 
 ```
-personal_website/
-├── docs/                    # GitHub Pages公開用ディレクトリ
-│   ├── index.html          # メインページ
-│   ├── research.html       # 研究ページ（予定）
-│   ├── music.html          # 音楽ページ（予定）
-│   ├── about.html          # プロフィールページ（予定）
-│   └── blog.html           # ブログページ（予定）
-├── src/                     # ソースファイル
-├── public/                  # 静的ファイル（画像、CSS、JS）
-├── content/                 # コンテンツ管理
-│   ├── about/
-│   ├── research/
-│   ├── music/
-│   └── blog/
-└── README.md               # このファイル
+website_personal/
+├── docs/           # GitHub Pages用の公開ディレクトリ
+│   ├── index.html  # メインページ
+│   └── *.html      # 各コンテンツページ
+├── scripts/        # 変換・管理ツール
+│   ├── batch_convert.py  # KaitoVault→HTML一括変換
+│   └── fix_html.py       # HTML修正ツール（内蔵）
+├── src/            # 開発用ソースファイル
+├── public/         # 静的アセット
+├── content/        # 下書きコンテンツ
+└── README.md       # このファイル
 ```
 
-## 🚀 GitHub Pages設定手順
+## 🌐 サイトURL
 
-### 1. GitHubリポジトリの作成
+- **本番サイト**: https://octopus828.github.io/kaito-personal-website/
+
+## 🔧 コンテンツ変換ツール
+
+### 1. 個別ファイル変換（推奨）
+
+**最も安全で確実な方法**です。一つずつファイルを確認しながら変換できます。
 
 ```bash
-# リポジトリを作成（GitHub上で）
-# 例: kaito-personal-website
+# 基本的な変換
+python scripts/fix_html.py input.md output.html
 
-# ローカルでGit初期化
-cd personal_website
-git init
-git add .
-git commit -m "Initial commit: Add basic HTML structure"
-git branch -M main
-git remote add origin https://github.com/yourusername/kaito-personal-website.git
-git push -u origin main
+# Markdownファイルがある場合は事前にpandocでHTML化
+pandoc input.md -o temp.html
+python scripts/fix_html.py temp.html output.html
 ```
 
-### 2. GitHub Pages設定
+### 2. 一括変換（要注意）
 
-1. GitHubリポジトリの**Settings**に移動
-2. 左サイドバーから**Pages**を選択
-3. Source設定:
-   - **Deploy from a branch**を選択
-   - Branch: **main**
-   - Folder: **/ (root)**または**/docs**
-4. **Save**をクリック
-
-### 3. カスタムドメイン（オプション）
-
-独自ドメインを使用する場合：
-1. `docs/CNAME`ファイルを作成
-2. ドメイン名を記入（例: `kaito.example.com`）
-3. DNS設定でGitHub Pagesを指定
-
-## 🛠️ 開発・更新方法
-
-### 基本的なHTMLファイル更新
+**必ず事前にバックアップを取り、変換対象を確認してください**。
 
 ```bash
-# ファイルを編集
-vim docs/index.html
+# KaitoVaultから一括変換
+python scripts/batch_convert.py ../KaitoVault docs
 
-# 変更をプッシュ
-git add .
-git commit -m "Update homepage content"
-git push origin main
+# 変換されるファイル例:
+# - 30_Music/PracticeLogs/bass_repertoire.md → bass_repertoire.html
+# - 10_Research/10_Projects/*/README.md → research_*.html
 ```
 
-### KaitoVaultからのコンテンツ変換
+#### ⚠️ 一括変換の注意事項
 
-#### 個別ファイル変換（推奨）
-```bash
-# 個別のMarkdownファイルをHTMLに変換
-python ../dev_projects/temp_html/fix_html.py \
-  ../KaitoVault/30_Music/PracticeLogs/bass_repertoire.md \
-  docs/bass_repertoire.html
-```
+一括変換を実行する前に、以下をチェックしてください：
 
-#### バッチ処理（要注意）
-```bash
-# 複数ファイルを一括変換（公開対象を事前に確認すること）
-python scripts/batch_convert.py ../KaitoVault docs ../dev_projects/temp_html
-```
+- [ ] 変換対象ファイルに**機密情報**が含まれていないか
+- [ ] 変換対象ファイルに**個人的すぎる内容**が含まれていないか  
+- [ ] 変換対象ファイルが**公開可能な状態**になっているか
+- [ ] 変換前にGitで現在の状態をコミットしているか
 
-**⚠️ 注意**: KaitoVaultには個人的・機密的な内容も含まれています。バッチ処理使用前に、公開対象ファイルを必ず確認してください。
+### 3. 安全な変換フロー
 
-### Jekyll使用への移行（将来的）
+1. **事前確認**: 変換対象のファイルを手動で確認
+2. **バックアップ**: `git add . && git commit -m "Before batch conversion"`
+3. **変換実行**: `python scripts/batch_convert.py ../KaitoVault docs`
+4. **結果確認**: 生成されたHTMLファイルを確認
+5. **公開**: 問題なければ `git push origin main`
 
-より高度な機能が必要になった場合：
+## 🎵 音楽コンテンツ変換例
 
 ```bash
-# Jekyll Gem Install
-gem install bundler jekyll
-
-# Jekyll初期化
-jekyll new . --force
-
-# 設定ファイル編集
-vim _config.yml
+# ベース練習記録を変換
+python scripts/fix_html.py ../KaitoVault/30_Music/PracticeLogs/bass_repertoire.md docs/bass_repertoire.html
 ```
+
+## 🔬 研究コンテンツ変換例
+
+```bash
+# 研究プロジェクトREADMEを変換
+python scripts/fix_html.py ../KaitoVault/10_Research/10_Projects/project_name/README.md docs/research_project_name.html
+```
+
+## 🔄 更新フロー
+
+1. **KaitoVault**でコンテンツを更新
+2. **変換ツール**でHTMLファイルを生成
+3. **index.html**にリンクを追加（必要に応じて）
+4. **Git**にコミット・プッシュ
+5. **GitHub Pages**で自動デプロイ
+
+## 🛠️ 技術スタック
+
+- **HTML/CSS**: 手書きのレスポンシブデザイン
+- **変換ツール**: Python (Pandoc + カスタムスクリプト)
+- **ホスティング**: GitHub Pages
+- **バージョン管理**: Git
 
 ## 📝 コンテンツ管理
 
-### KaitoVaultとの連携
-
-既存のObsidianコンテンツを活用：
-
-```bash
-# 研究関連コンテンツ
-../KaitoVault/10_Research/ → content/research/
-
-# 音楽関連コンテンツ
-../KaitoVault/30_Music/ → content/music/
-
-# ブログ記事
-../KaitoVault/10_Research/20_Memos/ → content/blog/
-```
-
-### コンテンツ変換スクリプト（今後作成予定）
-
-```bash
-# Markdown → HTML変換
-python scripts/convert_obsidian_to_html.py
-
-# 画像ファイルの処理
-python scripts/process_images.py
-```
-
-## 🎨 デザインカスタマイズ
-
-現在のデザイン特徴：
-- **レスポンシブデザイン**: モバイル対応
-- **グラデーション**: 紫系のモダンな配色
-- **カードレイアウト**: 各セクションをカード形式で表示
-- **アニメーション**: ホバーエフェクトなど
-
-### CSS変更
-
-```css
-/* メインカラーの変更 */
-:root {
-    --primary-color: #667eea;
-    --secondary-color: #764ba2;
-    --accent-color: #ffd700;
-}
-```
-
-## 📊 アクセス解析
-
-Google Analyticsの追加：
-
-```html
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'GA_MEASUREMENT_ID');
-</script>
-```
-
-## 🤖 自動化ツール
-
-### batch_convert.py
-KaitoVaultから選択的にコンテンツを変換するPythonスクリプト
-
-**現在の変換対象**:
-- `KaitoVault/30_Music/PracticeLogs/bass_repertoire.md` → `docs/bass_repertoire.html`
-- `KaitoVault/10_Research/10_Projects/*/README.md` → `docs/research_*.html`
-
-**使用前チェックリスト**:
-- [ ] 変換対象ファイルに機密情報が含まれていないか確認
-- [ ] YAMLメタデータのタイトルが適切か確認
-- [ ] 変換後にindex.htmlのナビゲーションを手動更新
-
-## 🔧 今後の拡張予定
-
-- [ ] Jekyllへの移行
-- [ ] ブログ機能の実装
-- [ ] 検索機能の追加
-- [ ] 多言語対応（英語）
-- [ ] コンテンツ管理システム（CMS）連携
-- [ ] 自動デプロイ（GitHub Actions）
-- [ ] バッチ処理の公開対象ファイル設定機能
-
-## 📞 サポート
-
-質問や問題がある場合は、GitHubのIssuesまたはKaitoVaultの関連ノートで管理してください。
+- **原稿**: `KaitoVault/` で管理（Obsidian）
+- **変換**: `scripts/` のツールで自動化
+- **公開**: `docs/` に配置してGitHub Pagesで公開
 
 ---
 
 **Last Updated**: 2025-07-09  
-**Version**: 1.0.0  
+**Version**: 1.1.0  
 **Author**: Kaito Sano
+
+## 🔄 変更履歴
+
+- **v1.1.0**: batch_convert.pyの依存関係を内蔵化、fix_html.pyを統合
+- **v1.0.0**: 初期リリース、基本的な変換機能

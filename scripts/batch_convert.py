@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 KaitoVaultからWebサイト用HTMLファイルを一括生成するスクリプト
-temp_htmlシステムを活用したバッチ処理
+内蔵のfix_html.pyを使用してHTML変換を行う
 """
 
 import os
@@ -13,11 +13,11 @@ from pathlib import Path
 from datetime import datetime
 
 class KaitoVaultConverter:
-    def __init__(self, vault_path, output_path, temp_html_path):
+    def __init__(self, vault_path, output_path):
         self.vault_path = Path(vault_path)
         self.output_path = Path(output_path)
-        self.temp_html_path = Path(temp_html_path)
-        self.fix_html_script = self.temp_html_path / "fix_html.py"
+        # 同じディレクトリのfix_html.pyを参照
+        self.fix_html_script = Path(__file__).parent / "fix_html.py"
         
     def convert_file(self, md_file, html_file):
         """単一ファイルを変換"""
@@ -137,7 +137,7 @@ class KaitoVaultConverter:
         print("🚀 KaitoVault → Website 変換を開始...")
         print(f"📁 Vault: {self.vault_path}")
         print(f"📁 Output: {self.output_path}")
-        print(f"🔧 temp_html: {self.temp_html_path}")
+        print(f"🔧 HTML変換ツール: {self.fix_html_script}")
         
         if not self.fix_html_script.exists():
             print(f"❌ fix_html.pyが見つかりません: {self.fix_html_script}")
@@ -164,16 +164,15 @@ class KaitoVaultConverter:
         print("   git add . && git commit -m \"Add batch converted content\" && git push origin main")
 
 def main():
-    if len(sys.argv) != 4:
-        print("使用法: python batch_convert.py <vault_path> <output_path> <temp_html_path>")
-        print("例: python batch_convert.py ../KaitoVault docs ../dev_projects/temp_html")
+    if len(sys.argv) != 3:
+        print("使用法: python batch_convert.py <vault_path> <output_path>")
+        print("例: python batch_convert.py ../KaitoVault docs")
         sys.exit(1)
     
     vault_path = sys.argv[1]
     output_path = sys.argv[2]
-    temp_html_path = sys.argv[3]
     
-    converter = KaitoVaultConverter(vault_path, output_path, temp_html_path)
+    converter = KaitoVaultConverter(vault_path, output_path)
     converter.run()
 
 if __name__ == "__main__":
