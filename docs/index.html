@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaito's Personal Website</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        nav {
+            background: #333;
+            padding: 1rem 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav ul li {
+            margin: 0 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        
+        .hero {
+            background: white;
+            margin: 2rem 0;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        .music-section {
+            border-left: 4px solid #ffd700;
+        }
+        
+        .research-section {
+            border-left: 4px solid #667eea;
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🎵 Kaito's Personal Website 🔬</h1>
+            <p>Research × Brazilian Music × Life</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#music">Music</a></li>
+                <li><a href="#blog">Blog</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <section class="hero">
+            <h2>Welcome to My World</h2>
+            <p>認知科学の研究者として、そしてブラジル音楽愛好家として、日々の発見と学びを共有していきます。</p>
+        </section>
+        
+        <div class="sections">
+            <section id="research" class="section research-section">
+                <h2><span class="emoji">🔬</span>Research</h2>
+                <p>認知科学、心理学、リスク認知の研究に取り組んでいます。</p>
+                <ul>
+                    <li>リスク認知と意思決定</li>
+                    <li>認知バイアス</li>
+                    <li>データ分析手法</li>
+                    <li>心理測定</li>
+                </ul>
+                <p><a href="research.html">研究について詳しく →</a></p>
+            </section>
+            
+            <section id="music" class="section music-section">
+                <h2><span class="emoji">🎵</span>Brazilian Music</h2>
+                <p>ブラジル音楽の魅力に取り憑かれて、日々探求しています。</p>
+                <ul>
+                    <li>サンバ・カーニバル</li>
+                    <li>ボサノヴァ</li>
+                    <li>ショーロ</li>
+                    <li>ベース演奏</li>
+                </ul>
+                <p><a href="music.html">音楽について詳しく →</a></p>
+            </section>
+            
+            <section id="about" class="section">
+                <h2><span class="emoji">👨‍🎓</span>About Me</h2>
+                <p>研究と音楽、そして日常の中で見つけた面白いことを綴っています。</p>
+                <p>現在は博士課程で認知科学を専攻しながら、ブラジル音楽の演奏も続けています。</p>
+                <p><a href="about.html">プロフィール詳細 →</a></p>
+            </section>
+            
+            <section id="blog" class="section">
+                <h2><span class="emoji">📝</span>Blog</h2>
+                <p>研究のこと、音楽のこと、日常で気づいたことを定期的に更新しています。</p>
+                <p><strong>最新記事：</strong></p>
+                <ul>
+                    <li>準備中...</li>
+                </ul>
+                <p><a href="blog.html">ブログ一覧 →</a></p>
+            </section>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Kaito's Personal Website. Built with ❤️ and hosted on GitHub Pages.</p>
+        </div>
+    </footer>
+</body>
+</html> 
