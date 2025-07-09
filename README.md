@@ -12,9 +12,8 @@ website_personal/
 ├── scripts/        # 変換・管理ツール
 │   ├── batch_convert.py  # KaitoVault→HTML一括変換
 │   └── fix_html.py       # HTML修正ツール（内蔵）
-├── src/            # 開発用ソースファイル
-├── public/         # 静的アセット
-├── content/        # 下書きコンテンツ
+├── _CONTEXT_FOR_NEW_CHAT.md  # 新しいチャットセッション用詳細ガイド
+├── _SIMPLE_PROMPT.md         # 新しいチャットセッション用簡易プロンプト
 └── README.md       # このファイル
 ```
 

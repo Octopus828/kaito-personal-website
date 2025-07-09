@@ -5,9 +5,12 @@
 ## 📍 プロジェクトの現在地
 
 - **作業ディレクトリ**: `/Users/kaito-sa/KaitoEnv/website_personal`
+- **KaitoVault（コンテンツ元）**: `/Users/kaito-sa/KaitoEnv/KaitoVault`
 - **公開サイト**: https://octopus828.github.io/kaito-personal-website/
 - **GitHubリポジトリ**: https://github.com/Octopus828/kaito-personal-website
 - **プロジェクト状態**: 稼働中（GitHub Pages公開済み）
+
+**⚠️ 重要**: KaitoVaultはwebsite_personalの外部にあります（../KaitoVault）
 
 ## 🎯 プロジェクトの目的
 
@@ -16,17 +19,26 @@ Kaito（認知科学研究者）の個人ウェブサイト。研究活動とブ
 ## 📁 プロジェクト構造
 
 ```
-website_personal/
-├── docs/                      # GitHub Pages公開ディレクトリ
-│   ├── index.html            # メインページ（稼働中）
-│   └── samba_carnaval.html   # サンバ記事（公開済み）
-├── scripts/                   # 変換ツール（独立・統合済み）
-│   ├── batch_convert.py      # KaitoVault→HTML一括変換
-│   └── fix_html.py           # HTML修正ツール
-├── src/                       # 開発用ソース
-├── public/                    # 静的アセット
-├── content/                   # 下書きコンテンツ
-└── README.md                 # プロジェクトドキュメント
+/Users/kaito-sa/KaitoEnv/
+├── website_personal/          # 👈 作業ディレクトリ
+│   ├── docs/                  # GitHub Pages公開ディレクトリ
+│   │   ├── index.html        # メインページ（稼働中）
+│   │   └── samba_carnaval.html # サンバ記事（公開済み）
+│   ├── scripts/               # 変換ツール（独立・統合済み）
+│   │   ├── batch_convert.py  # KaitoVault→HTML一括変換
+│   │   └── fix_html.py       # HTML修正ツール
+│   ├── src/                   # 開発用ソース
+│   ├── public/                # 静的アセット
+│   ├── content/               # 下書きコンテンツ
+│   └── README.md             # プロジェクトドキュメント
+│
+└── KaitoVault/                # 👈 コンテンツ元（../KaitoVault）
+    ├── 30_Music/
+    │   └── PracticeLogs/
+    │       └── bass_repertoire.md
+    └── 10_Research/
+        └── 10_Projects/
+            └── */README.md
 ```
 
 ## 🔧 主要ツール
@@ -38,10 +50,13 @@ python scripts/fix_html.py input.md output.html
 
 ### 2. 一括変換（要注意）
 ```bash
+# 作業ディレクトリ: /Users/kaito-sa/KaitoEnv/website_personal
 python scripts/batch_convert.py ../KaitoVault docs
 ```
 
-**⚠️ 重要**: KaitoVaultには機密情報が含まれる可能性があるため、一括変換前に必ず内容を確認すること
+**⚠️ 重要**: 
+- KaitoVaultはwebsite_personalの外部（../KaitoVault）にあります
+- 機密情報が含まれる可能性があるため、一括変換前に必ず内容を確認すること
 
 ## 🌐 現在公開中のコンテンツ
 
@@ -66,8 +81,8 @@ python scripts/batch_convert.py ../KaitoVault docs
 
 ## 📊 現在の変換対象
 
-- `KaitoVault/30_Music/PracticeLogs/bass_repertoire.md` → `bass_repertoire.html`
-- `KaitoVault/10_Research/10_Projects/*/README.md` → `research_*.html`
+- `../KaitoVault/30_Music/PracticeLogs/bass_repertoire.md` → `bass_repertoire.html`
+- `../KaitoVault/10_Research/10_Projects/*/README.md` → `research_*.html`
 
 ## 🔐 セキュリティ考慮事項
 
@@ -86,6 +101,8 @@ python scripts/batch_convert.py ../KaitoVault docs
 
 ### 新しいコンテンツの追加
 ```bash
+# 作業ディレクトリ: /Users/kaito-sa/KaitoEnv/website_personal
+
 # 1. KaitoVaultでMarkdownを作成
 # 2. HTMLに変換
 python scripts/fix_html.py ../KaitoVault/path/to/file.md docs/new_content.html
@@ -97,6 +114,8 @@ git add . && git commit -m "Add new content" && git push origin main
 
 ### 既存コンテンツの更新
 ```bash
+# 作業ディレクトリ: /Users/kaito-sa/KaitoEnv/website_personal
+
 # 1. KaitoVaultで編集
 # 2. 再変換
 python scripts/fix_html.py ../KaitoVault/path/to/file.md docs/existing_content.html
