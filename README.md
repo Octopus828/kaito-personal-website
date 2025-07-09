@@ -77,6 +77,24 @@ git commit -m "Update homepage content"
 git push origin main
 ```
 
+### KaitoVaultからのコンテンツ変換
+
+#### 個別ファイル変換（推奨）
+```bash
+# 個別のMarkdownファイルをHTMLに変換
+python ../dev_projects/temp_html/fix_html.py \
+  ../KaitoVault/30_Music/PracticeLogs/bass_repertoire.md \
+  docs/bass_repertoire.html
+```
+
+#### バッチ処理（要注意）
+```bash
+# 複数ファイルを一括変換（公開対象を事前に確認すること）
+python scripts/batch_convert.py ../KaitoVault docs ../dev_projects/temp_html
+```
+
+**⚠️ 注意**: KaitoVaultには個人的・機密的な内容も含まれています。バッチ処理使用前に、公開対象ファイルを必ず確認してください。
+
 ### Jekyll使用への移行（将来的）
 
 より高度な機能が必要になった場合：
@@ -153,6 +171,20 @@ Google Analyticsの追加：
 </script>
 ```
 
+## 🤖 自動化ツール
+
+### batch_convert.py
+KaitoVaultから選択的にコンテンツを変換するPythonスクリプト
+
+**現在の変換対象**:
+- `KaitoVault/30_Music/PracticeLogs/bass_repertoire.md` → `docs/bass_repertoire.html`
+- `KaitoVault/10_Research/10_Projects/*/README.md` → `docs/research_*.html`
+
+**使用前チェックリスト**:
+- [ ] 変換対象ファイルに機密情報が含まれていないか確認
+- [ ] YAMLメタデータのタイトルが適切か確認
+- [ ] 変換後にindex.htmlのナビゲーションを手動更新
+
 ## 🔧 今後の拡張予定
 
 - [ ] Jekyllへの移行
@@ -161,6 +193,7 @@ Google Analyticsの追加：
 - [ ] 多言語対応（英語）
 - [ ] コンテンツ管理システム（CMS）連携
 - [ ] 自動デプロイ（GitHub Actions）
+- [ ] バッチ処理の公開対象ファイル設定機能
 
 ## 📞 サポート
 
@@ -168,6 +201,6 @@ Google Analyticsの追加：
 
 ---
 
-**Last Updated**: 2025-01-09  
+**Last Updated**: 2025-07-09  
 **Version**: 1.0.0  
-**Author**: Kaito 
+**Author**: Kaito Sano
