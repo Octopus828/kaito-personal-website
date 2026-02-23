@@ -30,32 +30,50 @@ class KaitoVaultConverter:
         lines = text.split('\n')
         out = []
         in_para = False
+        in_blockquote = False
         for line in lines:
-            if line.startswith('# '):
+            # Markdown 引用: 行頭が >
+            if line.startswith('> '):
                 if in_para:
                     out.append('</p>')
                     in_para = False
-                out.append(f'<h1>{line[2:].strip()}</h1>')
-            elif line.startswith('## '):
+                if not in_blockquote:
+                    out.append('<blockquote><p>')
+                    in_blockquote = True
+                else:
+                    out.append('</p><p>')
+                out.append(line[2:].strip().replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
+            elif line.strip() == '>' or (line.startswith('>') and not line.startswith('> ')):
+                # 行が ">" のみ、または ">テキスト"（スペースなし）のとき
                 if in_para:
                     out.append('</p>')
                     in_para = False
-                out.append(f'<h2>{line[3:].strip()}</h2>')
-            elif line.startswith('### '):
-                if in_para:
-                    out.append('</p>')
-                    in_para = False
-                out.append(f'<h3>{line[4:].strip()}</h3>')
+                q = line.lstrip('>').strip()
+                if not in_blockquote:
+                    out.append('<blockquote><p>')
+                    in_blockquote = True
+                else:
+                    out.append('</p><p>')
+                if q:
+                    out.append(q.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
             elif line.strip():
+                if in_blockquote:
+                    out.append('</p></blockquote>')
+                    in_blockquote = False
                 if not in_para:
                     out.append('<p>')
                     in_para = True
                 out.append(line.strip())
                 out.append(' ')
             else:
+                if in_blockquote:
+                    out.append('</p></blockquote>')
+                    in_blockquote = False
                 if in_para:
                     out.append('</p>')
                     in_para = False
+        if in_blockquote:
+            out.append('</p></blockquote>')
         if in_para:
             out.append('</p>')
         body = '\n'.join(out).strip()
