@@ -56,6 +56,30 @@ class KaitoVaultConverter:
                     out.append('</p><p>')
                 if q:
                     out.append(q.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
+            elif line.startswith('# '):
+                if in_blockquote:
+                    out.append('</p></blockquote>')
+                    in_blockquote = False
+                if in_para:
+                    out.append('</p>')
+                    in_para = False
+                out.append(f'<h1>{line[2:].strip()}</h1>')
+            elif line.startswith('## '):
+                if in_blockquote:
+                    out.append('</p></blockquote>')
+                    in_blockquote = False
+                if in_para:
+                    out.append('</p>')
+                    in_para = False
+                out.append(f'<h2>{line[3:].strip()}</h2>')
+            elif line.startswith('### '):
+                if in_blockquote:
+                    out.append('</p></blockquote>')
+                    in_blockquote = False
+                if in_para:
+                    out.append('</p>')
+                    in_para = False
+                out.append(f'<h3>{line[4:].strip()}</h3>')
             elif line.strip():
                 if in_blockquote:
                     out.append('</p></blockquote>')
