@@ -1,6 +1,6 @@
 # Kaito's Personal Website Project Context
 
-**新しいチャットセッション用のコンテキスト情報**
+**新しいチャットセッション用のコンテキスト情報**（.cursor/ に配置。チャットで @ して利用）
 
 ## 📍 プロジェクトの現在地
 
@@ -23,19 +23,19 @@ Kaito（認知科学研究者）の個人ウェブサイト。研究活動とブ
 ├── website_personal/          # 👈 作業ディレクトリ
 │   ├── docs/                  # GitHub Pages公開ディレクトリ
 │   │   ├── index.html        # メインページ（稼働中）
-│   │   └── samba_carnaval.html # サンバ記事（公開済み）
+│   │   ├── samba_carnaval.html # サンバ記事（公開済み）
+│   │   └── diary/            # 日記（一覧・個別HTML）
 │   ├── scripts/               # 変換ツール（独立・統合済み）
 │   │   ├── batch_convert.py  # KaitoVault→HTML一括変換
 │   │   └── fix_html.py       # HTML修正ツール
-│   ├── src/                   # 開発用ソース
-│   ├── public/                # 静的アセット
-│   ├── content/               # 下書きコンテンツ
 │   └── README.md             # プロジェクトドキュメント
 │
 └── KaitoVault/                # 👈 コンテンツ元（../KaitoVault）
     ├── 30_Music/
     │   └── PracticeLogs/
     │       └── bass_repertoire.md
+    ├── 40_LifeLog/
+    │   └── Diary/             # 日記（YYYY-MM-DD.md → docs/diary/）
     └── 10_Research/
         └── 10_Projects/
             └── */README.md
@@ -81,8 +81,8 @@ python scripts/batch_convert.py ../KaitoVault docs
 
 ## 📊 現在の変換対象
 
-- `../KaitoVault/30_Music/PracticeLogs/bass_repertoire.md` → `bass_repertoire.html`
-- `../KaitoVault/10_Research/10_Projects/*/README.md` → `research_*.html`
+- 一括変換では**日記のみ**: `../KaitoVault/40_LifeLog/Diary/*.md` → `docs/diary/YYYY-MM-DD.html`（一覧は `docs/diary/index.html`）
+- 音楽・研究の一括変換は無効化済み（必要時は個別変換または batch_convert.py で該当処理を復活）
 
 ## 🔐 セキュリティ考慮事項
 
@@ -124,8 +124,18 @@ python scripts/fix_html.py ../KaitoVault/path/to/file.md docs/existing_content.h
 git add . && git commit -m "Update content" && git push origin main
 ```
 
+### 日記の追加・更新
+```bash
+# 1. KaitoVault の 40_LifeLog/Diary/ に YYYY-MM-DD.md を追加または編集
+# 2. 一括変換（日記一覧も自動更新）
+python scripts/batch_convert.py ../KaitoVault docs
+# 3. プッシュ
+git add . && git commit -m "Update diary" && git push origin main
+```
+
 ## 🎯 今後の展開予定
 
+- [x] 日記機能（40_LifeLog/Diary → docs/diary）
 - [ ] ブログ機能の実装
 - [ ] 研究プロジェクトページの追加
 - [ ] 音楽コンテンツの拡充

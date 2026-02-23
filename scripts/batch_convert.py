@@ -6,9 +6,10 @@ KaitoVaultからWebサイト用HTMLファイルを一括生成するスクリプ
 """
 
 import os
+import re
 import sys
 import subprocess
-import yaml
+import tempfile
 from pathlib import Path
 from datetime import datetime
 
@@ -19,48 +20,122 @@ class KaitoVaultConverter:
         # 同じディレクトリのfix_html.pyを参照
         self.fix_html_script = Path(__file__).parent / "fix_html.py"
         
-    def convert_file(self, md_file, html_file):
-        """単一ファイルを変換"""
-        cmd = [
-            "python", str(self.fix_html_script),
-            str(md_file), str(html_file)
-        ]
-        
-        try:
-            result = subprocess.run(cmd, capture_output=True, text=True)
-            if result.returncode == 0:
-                print(f"✅ 変換完了: {md_file.name} → {html_file.name}")
-                return True
+    def _md_to_html_minimal(self, md_path):
+        """pandoc が使えない場合の簡易 md→HTML（frontmatter 除去・見出しと段落のみ）"""
+        text = Path(md_path).read_text(encoding='utf-8')
+        if text.startswith('---'):
+            end = text.find('---', 3)
+            if end != -1:
+                text = text[end + 3:].lstrip()
+        lines = text.split('\n')
+        out = []
+        in_para = False
+        for line in lines:
+            if line.startswith('# '):
+                if in_para:
+                    out.append('</p>')
+                    in_para = False
+                out.append(f'<h1>{line[2:].strip()}</h1>')
+            elif line.startswith('## '):
+                if in_para:
+                    out.append('</p>')
+                    in_para = False
+                out.append(f'<h2>{line[3:].strip()}</h2>')
+            elif line.startswith('### '):
+                if in_para:
+                    out.append('</p>')
+                    in_para = False
+                out.append(f'<h3>{line[4:].strip()}</h3>')
+            elif line.strip():
+                if not in_para:
+                    out.append('<p>')
+                    in_para = True
+                out.append(line.strip())
+                out.append(' ')
             else:
-                print(f"❌ 変換失敗: {md_file.name}")
-                print(f"エラー: {result.stderr}")
-                return False
+                if in_para:
+                    out.append('</p>')
+                    in_para = False
+        if in_para:
+            out.append('</p>')
+        body = '\n'.join(out).strip()
+        return f'<!DOCTYPE html><html><head><title>Document</title></head><body>{body}</body></html>'
+    
+    def convert_file(self, md_file, html_file):
+        """単一ファイルを変換（.md の場合は pandoc で HTML 化してから fix_html）"""
+        md_file = Path(md_file)
+        html_file = Path(html_file)
+        try:
+            if md_file.suffix.lower() == '.md':
+                tmp_path = None
+                try:
+                    r = subprocess.run(
+                        ['pandoc', str(md_file), '-o', '-', '--standalone'],
+                        capture_output=True, text=True
+                    )
+                    if r.returncode == 0 and r.stdout:
+                        tmp_path = tempfile.mktemp(suffix='.html')
+                        Path(tmp_path).write_text(r.stdout, encoding='utf-8')
+                    else:
+                        # pandoc がない or 失敗 → 簡易変換
+                        html_content = self._md_to_html_minimal(md_file)
+                        tmp_path = tempfile.mktemp(suffix='.html')
+                        Path(tmp_path).write_text(html_content, encoding='utf-8')
+                except FileNotFoundError:
+                    html_content = self._md_to_html_minimal(md_file)
+                    tmp_path = tempfile.mktemp(suffix='.html')
+                    Path(tmp_path).write_text(html_content, encoding='utf-8')
+                if tmp_path:
+                    try:
+                        cmd = [
+                            "python", str(self.fix_html_script),
+                            tmp_path, str(html_file)
+                        ]
+                        result = subprocess.run(cmd, capture_output=True, text=True)
+                        if result.returncode != 0:
+                            print(f"❌ 変換失敗: {md_file.name}")
+                            print(f"エラー: {result.stderr}")
+                            return False
+                    finally:
+                        if os.path.exists(tmp_path):
+                            os.unlink(tmp_path)
+                else:
+                    return False
+            else:
+                cmd = [
+                    "python", str(self.fix_html_script),
+                    str(md_file), str(html_file)
+                ]
+                result = subprocess.run(cmd, capture_output=True, text=True)
+                if result.returncode != 0:
+                    print(f"❌ 変換失敗: {md_file.name}")
+                    print(f"エラー: {result.stderr}")
+                    return False
+            print(f"✅ 変換完了: {md_file.name} → {html_file.name}")
+            return True
         except Exception as e:
             print(f"❌ 実行エラー: {e}")
             return False
     
     def get_file_title(self, md_file):
-        """MarkdownファイルからタイトルYAMLを取得"""
+        """Markdownファイルからタイトル（YAML frontmatter または最初の h1）を取得"""
         try:
             with open(md_file, 'r', encoding='utf-8') as f:
                 content = f.read()
-                if content.startswith('---'):
-                    yaml_end = content.find('---', 3)
-                    if yaml_end != -1:
-                        yaml_content = content[3:yaml_end]
-                        metadata = yaml.safe_load(yaml_content)
-                        return metadata.get('title', md_file.stem)
-                        
-            # YAMLがない場合は最初のh1を探す
+            if content.startswith('---'):
+                yaml_end = content.find('---', 3)
+                if yaml_end != -1:
+                    yaml_content = content[3:yaml_end]
+                    m = re.search(r'^title:\s*(.+)$', yaml_content, re.MULTILINE)
+                    if m:
+                        return m.group(1).strip().strip('"\'')
             lines = content.split('\n')
             for line in lines:
                 if line.startswith('# '):
                     return line[2:].strip()
-                    
         except Exception:
             pass
-            
-        return md_file.stem
+        return Path(md_file).stem
     
     def convert_music_content(self):
         """音楽関連コンテンツを変換"""
@@ -109,6 +184,109 @@ class KaitoVaultConverter:
         
         return converted
     
+    def convert_diary_content(self):
+        """日記コンテンツを変換（40_LifeLog/Diary/*.md → docs/diary/YYYY-MM-DD.html）"""
+        diary_path = self.vault_path / "40_LifeLog" / "Diary"
+        if not diary_path.exists():
+            return []
+        out_diary = self.output_path / "diary"
+        out_diary.mkdir(parents=True, exist_ok=True)
+        converted = []
+        # YYYY-MM-DD.md 形式のファイルを日付の新しい順で処理
+        md_files = sorted(
+            [f for f in diary_path.iterdir() if f.suffix.lower() == '.md' and f.is_file()],
+            key=lambda p: p.stem,
+            reverse=True
+        )
+        for md_file in md_files:
+            # ファイル名が YYYY-MM-DD 形式か簡易チェック
+            stem = md_file.stem
+            output_file = out_diary / f"{stem}.html"
+            if self.convert_file(md_file, output_file):
+                title = self.get_file_title(md_file)
+                converted.append({
+                    'file': f"diary/{stem}.html",
+                    'title': title,
+                    'date': stem,
+                    'category': 'diary'
+                })
+        return converted
+    
+    def write_diary_index(self, diary_entries):
+        """日記一覧ページ docs/diary/index.html を生成"""
+        if not diary_entries:
+            return
+        out_diary = self.output_path / "diary"
+        out_diary.mkdir(parents=True, exist_ok=True)
+        index_file = out_diary / "index.html"
+        # ナビは docs/diary/ からなので ../ でトップへ
+        nav_base = "../"
+        # 一覧は docs/diary/index.html なので、リンクは同階層の YYYY-MM-DD.html
+        items_html = "\n".join(
+            f'                <li><a href="{e["date"]}.html">{e["date"]}: {e["title"]}</a></li>'
+            for e in diary_entries
+        )
+        html = f'''<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日記 - Kaito's Personal Website</title>
+    <style>
+        body {{ font-family: 'Arial', sans-serif; line-height: 1.6; margin: 0; padding: 0; color: #333; background-color: #f4f4f4; }}
+        .container {{ max-width: 1200px; margin: 0 auto; padding: 20px; }}
+        header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem 0; text-align: center; }}
+        nav {{ background: #333; padding: 1rem 0; }}
+        nav ul {{ list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; }}
+        nav ul li {{ margin: 0 20px; }}
+        nav ul li a {{ color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px; transition: background-color 0.3s; }}
+        nav ul li a:hover {{ background-color: #555; }}
+        main {{ background: white; margin: 2rem 0; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }}
+        main h2 {{ color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 0.5rem; }}
+        main ul {{ list-style: none; padding: 0; }}
+        main ul li {{ margin: 0.8em 0; }}
+        main ul li a {{ color: #667eea; text-decoration: none; }}
+        main ul li a:hover {{ text-decoration: underline; }}
+        footer {{ background: #333; color: white; text-align: center; padding: 2rem 0; margin-top: 3rem; }}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📝 日記</h1>
+            <p>Kaito's Personal Website</p>
+        </div>
+    </header>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="{nav_base}index.html">Home</a></li>
+                <li><a href="{nav_base}index.html#research">Research</a></li>
+                <li><a href="{nav_base}index.html#music">Music</a></li>
+                <li><a href="{nav_base}index.html#blog">Blog</a></li>
+                <li><a href="index.html">Diary</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <main>
+            <h2>日記一覧</h2>
+            <ul>
+{items_html}
+            </ul>
+        </main>
+    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Kaito's Personal Website. Built with ❤️ and hosted on GitHub Pages.</p>
+        </div>
+    </footer>
+</body>
+</html>
+'''
+        index_file.write_text(html, encoding='utf-8')
+        print(f"✅ 日記一覧: {index_file}")
+    
     def update_navigation(self, converted_files):
         """index.htmlのナビゲーションを更新"""
         index_file = self.output_path / "index.html"
@@ -121,6 +299,7 @@ class KaitoVaultConverter:
         
         music_files = [f for f in converted_files if f['category'] == 'music']
         research_files = [f for f in converted_files if f['category'] == 'research']
+        diary_files = [f for f in converted_files if f['category'] == 'diary']
         
         if music_files:
             print("\n🎵 Music セクションに追加:")
@@ -130,6 +309,11 @@ class KaitoVaultConverter:
         if research_files:
             print("\n🔬 Research セクションに追加:")
             for file_info in research_files:
+                print(f"  <li><a href=\"{file_info['file']}\">{file_info['title']}</a></li>")
+        
+        if diary_files:
+            print("\n📝 Diary セクションに追加:")
+            for file_info in diary_files:
                 print(f"  <li><a href=\"{file_info['file']}\">{file_info['title']}</a></li>")
     
     def run(self):
@@ -146,10 +330,11 @@ class KaitoVaultConverter:
         # 出力ディレクトリを作成
         self.output_path.mkdir(parents=True, exist_ok=True)
         
-        # 変換実行
+        # 変換実行（現在は日記のみ。音楽・研究は将来必要時に convert_music_content / convert_research_content を復活）
         converted_files = []
-        converted_files.extend(self.convert_music_content())
-        converted_files.extend(self.convert_research_content())
+        diary_files = self.convert_diary_content()
+        converted_files.extend(diary_files)
+        self.write_diary_index(diary_files)
         
         # 結果表示
         print(f"\n✅ 変換完了: {len(converted_files)} ファイル")

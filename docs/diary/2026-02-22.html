@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* ====================
+           リセット & 基本設定
+        ==================== */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            color: #333333;
+            font-size: 16px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* ====================
+           ヘッダー階層
+        ==================== */
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2.5em;
+            margin-bottom: 1em;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 2em;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 5px;
+        }
+
+        h4 {
+            font-size: 1.25em;
+            color: #34495e;
+        }
+
+        h5 {
+            font-size: 1.1em;
+            color: #34495e;
+        }
+
+        h6 {
+            font-size: 1em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ====================
+           テキスト要素
+        ==================== */
+        p {
+            margin-bottom: 1.5em;
+            line-height: 1.7;
+        }
+
+        /* ====================
+           コードブロック
+        ==================== */
+        pre {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        code {
+            background-color: #f8f9fa;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+            border: 1px solid #e9ecef;
+        }
+
+        /* ====================
+           引用
+        ==================== */
+        blockquote {
+            border-left: 5px solid #3498db;
+            margin: 1.5em 0;
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            font-style: italic;
+            color: #555;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        blockquote p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ====================
+           リスト
+        ==================== */
+        ul, ol {
+            margin-bottom: 1.5em;
+            padding-left: 2em;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        /* ====================
+           テーブル
+        ==================== */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5em 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 500px;
+            background-color: #ffffff;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+
+        /* ====================
+           画像
+        ==================== */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+
+        /* ====================
+           動画（iframe）
+        ==================== */
+        iframe {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+
+        /* ====================
+           リンク
+        ==================== */
+        a {
+            color: #3498db;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #2980b9;
+            border-bottom-color: #2980b9;
+        }
+
+        /* ====================
+           レスポンシブ: タブレット
+        ==================== */
+        @media (max-width: 1024px) {
+            body {
+                padding: 30px 15px;
+                font-size: 15px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            h3 {
+                font-size: 1.4em;
+            }
+
+            pre {
+                padding: 15px;
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 10px 12px;
+            }
+
+            iframe {
+                width: 100%;
+                height: 250px;
+            }
+        }
+
+        /* ====================
+           レスポンシブ: スマホ
+        ==================== */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-top: 0;
+                margin-bottom: 0.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+                margin-top: 2em;
+                margin-bottom: 0.8em;
+            }
+
+            h3 {
+                font-size: 1.3em;
+                margin-top: 1.5em;
+                margin-bottom: 0.6em;
+            }
+
+            h4, h5, h6 {
+                margin-top: 1.2em;
+                margin-bottom: 0.5em;
+            }
+
+            pre {
+                padding: 12px;
+                font-size: 12px;
+                margin: 1em 0;
+            }
+
+            blockquote {
+                padding: 10px 15px;
+                margin: 1em 0;
+            }
+
+            ul, ol {
+                padding-left: 1.5em;
+            }
+
+            th, td {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            table {
+                min-width: 400px;
+            }
+
+            iframe {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        /* ====================
+           レスポンシブ: 小さいスマホ
+        ==================== */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 8px;
+                font-size: 13px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            pre {
+                padding: 10px;
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+
+            table {
+                min-width: 320px;
+            }
+
+            iframe {
+                width: 100%;
+                height: 180px;
+            }
+        }
+
+        /* ====================
+           印刷スタイル
+        ==================== */
+        @media print {
+            body {
+                max-width: none;
+                padding: 0;
+                font-size: 12pt;
+                line-height: 1.5;
+                color: #000;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                color: #000;
+                page-break-after: avoid;
+            }
+
+            pre, blockquote {
+                page-break-inside: avoid;
+                background-color: #f5f5f5 !important;
+                box-shadow: none;
+            }
+
+            a {
+                color: #000;
+                text-decoration: underline;
+            }
+
+            img {
+                max-width: 100% !important;
+                box-shadow: none;
+            }
+
+            iframe {
+                display: none;
+            }
+        }
+
+        /* ====================
+           ダークモード対応
+        ==================== */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #e0e0e0;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                color: #ffffff;
+            }
+
+            pre {
+                background-color: #2d2d2d;
+                border-color: #404040;
+            }
+
+            code {
+                background-color: #2d2d2d;
+                color: #ff6b6b;
+                border-color: #404040;
+            }
+
+            blockquote {
+                background-color: #2d2d2d;
+                border-left-color: #3498db;
+            }
+
+            table {
+                background-color: #1a1a1a;
+            }
+
+            th {
+                background-color: #2d2d2d;
+                color: #ffffff;
+            }
+
+            tr:nth-child(even) {
+                background-color: #2d2d2d;
+            }
+
+            tr:hover {
+                background-color: #3d3d3d;
+            }
+
+            th, td {
+                border-color: #404040;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1>2026年02月22日(日)</h1>
+<p>
+昨晩、岡山の裸祭りでケガ人が出た。意識不明のものも数人いる。過去には死亡事故も発生しており、安全対策を強化していたにもかかわらず…
+ 
+</p>
+<p>
+揚げたてのアジフライを噛み締めながら、夕方のニュース番組に注意を引かれた。
+ 
+</p>
+<p>
+裸祭り。白いふんどしを締めた男衆が老いも若きも大勢集い、寺のお堂のような空間で肉体を突き合わせてひしめき合う。密集した肉体から放たれた熱気が木造の建物にこもり、大きなサウナのようにも見える。祭りに参加したことは一度もないが、バラエティ番組で特集されているのを観たことがあり、雑駁な光景が頭に浮かぶ。
+ 
+</p>
+<p>
+といっても、旧正月の裸祭りは全国各地で行われており、岩手県の黒石寺や愛知県の国府宮神社、そして岡山県の西大寺のものが有名らしい。調べてみると、僕のイメージは黒石寺の蘇民祭と西大寺の会陽（えよう）を混同したものだとわかった。たしかに東北の寒い気候の中での裸が辛そうだと思った記憶もあるし、祭の実行委員が西日本の方言で話していたような気もする。
+ 
+</p>
+<p>
+西大寺に集まった１万人の男たちが興じたのは、2本の宝木（しんぎ）をめぐる争奪戦だ。彼らの祭は、注意事項と承諾事項への同意を兼ねた参加申込のGoogleフォームを提出するところから始まる。
+ 
+</p>
+<p>
+>万が一負傷した場合、救護所にて応急処置を行いますが、その処置の結果およびその後の経過について、主催者は一切の責任を負いません。
+ 
+</p>
+<p>
+>はだか祭りには自己責任のもと参加し、祭り参加中に生じる可能性のあるいかなる盗難、怪我、死亡等の事故に関して、主催者（西大寺奉賛会・金陵山西大寺等）その他関係団体は一切の責任を負わないことを承諾しますか？
+ 
+</p>
+<p>
+事故を防ぐため飲酒は固く禁じられており、身につけて良いのはまわしと白足袋のみ。メガネやネックレスの着用やスマートフォンの持ち込みは許されない。万が一に備えて、まわしの腹部には「氏名・住所・緊急連絡先・着替え場所の連絡先・血液型」を記入した名札を入れておく。全員分の着替え場所は用意されていないので、岡山商工会議所が準備した先着150名まで（1名3,000円）の場所を利用するか、近隣のホテルに宿泊するか、駐車場に停めた車内で着替えるか、いずれかの方法をとるしかない。
+ 
+</p>
+<p>
+午後8時を過ぎて、着替えを済ませて飲酒・身体検査をパスした者から境内への入場が許される。宝木の争奪戦に参加できない女衆が会陽太鼓を打ち鳴らし、裸の行列を送り出す。男たちが順に冷水へと浸かり身を清める様は、さながら小学校のプールの授業だ。本堂に着くと、大床では既に激しい押し合いが始まっているのが見える。たじろぐ。まだ宝木は投げ込まれていないはずだが、有利な場所を確保するための小競り合いが各所で起き、それが大きな波となって本堂にいる全員の動きを同期させているのだ。しかし福男に選ばれる条件は、仁王門まで宝木を運び出すことである。スタート前に体力を消耗するのは愚策だろう、本堂の階段には登らず大床の様子を眺める。ひしめく群衆にはときおり冷水が撒かれ、男たちが伸ばした腕から白い湯気が上る。
+ 
+</p>
+<p>
+一時間近く待っただろうか、境内の明かりが一斉に消える。
+ 
+</p>
+<p>
+明かりが戻ると、人体の波は、投げ込まれた2本の宝木を取り巻く渦へと姿を変えていた。渦は四方に揺らぎながらも、確実に本堂の階段へ、大床から抜け出そうと近づいていく。多くのものは渦の中心へ近づくことができず、ただ渦の一部となって右往左往するしかない。血気盛んな若者は、手前の人間を足場にして飛び上がり、密集した肩の上を這って渦の中央を狙う。踏みつけられた男たちは、苛立ちの怒号を上げながら若者を突き飛ばす。
+ 
+</p>
+<p>
+人々が渦を見失った頃、境内にアナウンスが響いた。
+ 
+</p>
+<p>
+ただいま宝木が抜けた模様です。裸のお客様は仁王門から速やかにお帰り下さい。
+ 
+</p>
+<p>
+ちょうど10分間の祭事であった。
+ 
+</p>
+<p>
+西大寺の会陽は、備前平野に春を呼ぶ伝統儀式だそうだ。
+ 
+</p>
+    <!-- テーブルを自動でラップする JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // テーブルを自動でコンテナにラップ
+            const tables = document.querySelectorAll('table');
+            tables.forEach(table => {
+                if (!table.parentElement.classList.contains('table-container')) {
+                    const container = document.createElement('div');
+                    container.className = 'table-container';
+                    table.parentNode.insertBefore(container, table);
+                    container.appendChild(table);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

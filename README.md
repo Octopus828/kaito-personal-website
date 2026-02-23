@@ -12,10 +12,13 @@ website_personal/
 ├── scripts/        # 変換・管理ツール
 │   ├── batch_convert.py  # KaitoVault→HTML一括変換
 │   └── fix_html.py       # HTML修正ツール（内蔵）
-├── _CONTEXT_FOR_NEW_CHAT.md  # 新しいチャットセッション用詳細ガイド
-├── _SIMPLE_PROMPT.md         # 新しいチャットセッション用簡易プロンプト
+├── .cursor/        # Cursor用（新チャット時に @ で参照するコンテキスト等）
+│   ├── _CONTEXT_FOR_NEW_CHAT.md
+│   └── _SIMPLE_PROMPT.md
 └── README.md       # このファイル
 ```
+
+.cursor/ 内のファイルは新チャットでは自動では読み込まれません。使うときはチャットで `@.cursor/_CONTEXT_FOR_NEW_CHAT.md` のように @ で指定してください。
 
 ## 🌐 サイトURL
 
@@ -44,9 +47,9 @@ python scripts/fix_html.py temp.html output.html
 # KaitoVaultから一括変換
 python scripts/batch_convert.py ../KaitoVault docs
 
-# 変換されるファイル例:
-# - 30_Music/PracticeLogs/bass_repertoire.md → bass_repertoire.html
-# - 10_Research/10_Projects/*/README.md → research_*.html
+# 現在は日記のみ変換されます:
+# - 40_LifeLog/Diary/*.md → docs/diary/YYYY-MM-DD.html（一覧は docs/diary/index.html）
+# 音楽・研究の一括変換は無効化済み。必要時は個別変換または batch_convert.py を編集。
 ```
 
 #### ⚠️ 一括変換の注意事項
@@ -79,6 +82,13 @@ python scripts/fix_html.py ../KaitoVault/30_Music/PracticeLogs/bass_repertoire.m
 # 研究プロジェクトREADMEを変換
 python scripts/fix_html.py ../KaitoVault/10_Research/10_Projects/project_name/README.md docs/research_project_name.html
 ```
+
+## 📝 日記の変換
+
+日記のソースは **KaitoVault の `40_LifeLog/Diary/`** に置きます。ファイル名は `YYYY-MM-DD.md` 形式にすると一覧と連携しやすくなります。
+
+- 一括変換で `docs/diary/` に個別HTMLと `diary/index.html`（一覧）が自動生成されます。
+- 日記を追加・更新したら `python scripts/batch_convert.py ../KaitoVault docs` を実行してからプッシュしてください。
 
 ## 🔄 更新フロー
 
