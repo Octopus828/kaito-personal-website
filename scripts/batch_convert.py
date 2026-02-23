@@ -226,6 +226,30 @@ class KaitoVaultConverter:
         
         return converted
     
+    def inject_diary_nav(self, html_path):
+        """個別日記HTMLの <body> 直後に Home / 日記一覧 のナビを挿入する"""
+        path = Path(html_path)
+        if not path.exists():
+            return
+        text = path.read_text(encoding='utf-8')
+        nav_block = '''
+<nav style="background:#333;padding:0.75rem 0;margin-bottom:0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px;">
+    <ul style="list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
+      <li><a href="../index.html" style="color:white;text-decoration:none;padding:0.25em 0;">Home</a></li>
+      <li><a href="index.html" style="color:white;text-decoration:none;padding:0.25em 0;">日記一覧</a></li>
+    </ul>
+  </div>
+</nav>
+'''
+        # <body> または <body ...> の直後に挿入
+        body_pattern = re.compile(r'(<body[^>]*>)', re.IGNORECASE)
+        match = body_pattern.search(text)
+        if match:
+            insert_pos = match.end()
+            new_text = text[:insert_pos] + nav_block + text[insert_pos:]
+            path.write_text(new_text, encoding='utf-8')
+
     def convert_diary_content(self):
         """日記コンテンツを変換（40_LifeLog/Diary/*.md → docs/diary/YYYY-MM-DD.html）"""
         diary_path = self.vault_path / "40_LifeLog" / "Diary"
@@ -245,6 +269,7 @@ class KaitoVaultConverter:
             stem = md_file.stem
             output_file = out_diary / f"{stem}.html"
             if self.convert_file(md_file, output_file):
+                self.inject_diary_nav(output_file)
                 title = self.get_file_title(md_file)
                 converted.append({
                     'file': f"diary/{stem}.html",
